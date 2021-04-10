@@ -2,6 +2,8 @@ from flask import Flask
 from flask import render_template
 from datetime import datetime
 import re
+import person_parser
+from flask import request
 
 app = Flask(__name__)
 
@@ -18,5 +20,14 @@ def about():
 @app.route("/contact/")
 def contact():
     return render_template("contact.html")
+
+@app.route('/person_parser/', methods = ['GET', 'POST'])
+def dynamic_page():
+    if request.method == 'POST':
+        return person_parser.parser_person()
+
+@app.route("/person/")
+def person():
+    return render_template("person.html")
 
 
