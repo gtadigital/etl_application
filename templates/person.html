@@ -3,9 +3,17 @@
 Person page
 {% endblock %}
 {% block content %}
+<h1>File Upload</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+      <p><input type="file" name="file" multiple></p>
+      <p><input type="submit" value="Submit"></p>
+    </form>
+    <hr>
+    {% for file in files %}
+      <img src="{{ url_for('upload', filename=file) }}" style="width: 64px">
+    {% endfor %}
 <form action = "http://localhost:5000/person_parser/" method = "POST" 
 enctype = "multipart/form-data">
-
 <input type = "submit"/>
 </form>
 {% endblock %}
