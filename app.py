@@ -31,8 +31,10 @@ def contact():
 @app.route('/person_parser/', methods = ['GET', 'POST'])
 def dynamic_page():
     if request.method == 'POST':
-        return person_parser.parser_person()
-
+        #return person_parser.parser_person()
+        person_parser.parser_person()
+        return redirect(url_for('person'))
+    
 @app.route("/person/")
 def person():
     return render_template("person.html")
@@ -46,6 +48,6 @@ def upload_files():
         if file_ext not in app.config['UPLOAD_EXTENSIONS']:
             abort(400)
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-    return redirect(url_for('index'))
+    return redirect(url_for('person'))
 
 
