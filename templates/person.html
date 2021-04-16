@@ -16,4 +16,11 @@ Person page
 enctype = "multipart/form-data">
 <input type = "submit"/>
 </form>
+<h1>File Download</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+      <p><input type="file" name="file" multiple></p>
+      <p><input type="submit" value="Submit"></p>
+    </form>
+    <hr>
+    <a href="{{ url_for('download', filename="downloadFile.txt") }}">File</a>
 {% endblock %}
