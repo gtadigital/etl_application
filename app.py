@@ -7,12 +7,14 @@ import person_parser
 from flask import request
 from flask import redirect, url_for, abort
 from werkzeug.utils import secure_filename
+from flask import send_from_directory
 
 app = Flask(__name__)
 
 #app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.xml', '.rdf']
 app.config['UPLOAD_PATH'] = 'input/person/'
+app.config['DOWNLOAD_PATH'] = 'output/person/'
 
 # Replace the existing home function with the one below
 @app.route("/")
@@ -49,5 +51,11 @@ def upload_files():
             abort(400)
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
     return redirect(url_for('person'))
+
+@app.route('/person/')
+def download_file(filename):
+    return send_from_directory(app.config['DOWNLOAD_PATH'],
+                               filename, as_attachment=True)
+    
 
 
