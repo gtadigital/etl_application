@@ -2,9 +2,7 @@
 
 ## Description:
 
-The ProfileParser harmonizes XML files according to CIDOC-CRM entities mapping schema. 
-
-The ProfileParser provides the following harmonization schema:
+The ProfileParser transforms source XML files in RDF.
 
 * Person (E21_Person)
 * Place (E53_Place)
@@ -14,45 +12,10 @@ The ProfileParser provides the following harmonization schema:
 
 ## Prerequisites:
 
-1. [Python3](https://www.python.org/download/releases/3.0/)
-2. [Lxml library](https://lxml.de)
 
 ## How To Use:
 
-* Clone the repository and go into the directory
 
-```bash
-# Clone the repository:
-$ git clone https://github.com/gtadigital/ProfileParser.git
-```
- A new folder ```ProfileParser```will be created
-
-* Go into the new folder:
-
-```bash
-# Go into the repository
-$ cd ProfileParser
-```
-
-* Install ***lxml*** library (If needed):
-
-```bash
-# Go into the repository
-$ pip3 install lxml
-```
-   
-* Run the script with arguments:
-
-```bash
-
-# Help documentation
-$ python3 profileParser.py --help
-
-OR
-
-# Run the script
-$ python3 profileParser.py --sourcePath "your source path" --targetPath "your target path" --xslt "xslt folder"
-```
 
 
 ## Credits:
