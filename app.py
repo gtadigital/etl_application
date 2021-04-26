@@ -5,16 +5,21 @@ import re
 import os
 import person_parser
 from flask import request
-from flask import redirect, url_for, abort
+from flask import redirect, url_for, abort, flash
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
 app = Flask(__name__)
-
+app.secret_key = "secret key"
 #app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
-app.config['UPLOAD_EXTENSIONS'] = ['.xml', '.rdf']
+#app.config['UPLOAD_EXTENSIONS'] = ['.xml', '.rdf']
 app.config['UPLOAD_PATH'] = 'input/person/'
-app.config['DOWNLOAD_PATH'] = 'output/person/'
+#app.config['DOWNLOAD_PATH'] = 'output/person/'
+
+ALLOWED_EXTENSIONS = set(['xml', 'rdf'])
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Replace the existing home function with the one below
 @app.route("/")
@@ -42,20 +47,21 @@ def person():
     return render_template("person.html")
 
 @app.route('/person/', methods=['POST'])
-def upload_files():
-    uploaded_file = request.files['file']
-    filename = secure_filename(uploaded_file.filename)
-    if filename != '':
-        file_ext = os.path.splitext(filename)[1]
-        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-            abort(400)
-        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-    return redirect(url_for('person'))
+def upload_file():
+    if request.method == 'POST':
 
-@app.route('/person/')
-def download_file(filename):
-    return send_from_directory(app.config['DOWNLOAD_PATH'],
-                               filename, as_attachment=True)
-    
+        if 'files[]' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+
+        files = request.files.getlist('files[]')
+
+        for file in files:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+
+        flash('File(s) successfully uploaded')
+        return redirect(url_for('person'))
 
 
