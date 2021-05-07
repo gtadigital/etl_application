@@ -8,6 +8,12 @@ from flask import request
 from flask import redirect, url_for, abort, flash
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+#imports for download function:
+import flask as fl
+import zipfile
+import io
+import pathlib
+import shutil
 
 app = Flask(__name__)
 app.secret_key = "secret key"
@@ -63,5 +69,22 @@ def upload_file():
 
         flash('File(s) successfully uploaded')
         return redirect(url_for('person'))
+    
+@app.route('/download_files/', methods=['POST'])
+def download_files():
+    base_path = pathlib.Path('./output/person/')
+
+    data_file = io.BytesIO()
+    with zipfile.ZipFile(data_file, 'w') as zf:
+        for f in base_path.glob("**/*.xml"):
+            zf.write(f)
+
+    data_file.seek(0)
+
+    shutil.rmtree('./output/person')
+    shutil.rmtree('./input/person')
+    os.makedirs('./output/person')
+    os.makedirs('./input/person')
+    return fl.send_file(data_file, attachment_filename='data.zip', as_attachment=True)
 
 
