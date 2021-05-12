@@ -1,8 +1,8 @@
-# ProfileParser
+# GTA modeller 
 
 ## Description:
 
-The ProfileParser transforms source XML files in RDF.
+The GTA modeller
 
 * Person (E21_Person)
 * Place (E53_Place)
