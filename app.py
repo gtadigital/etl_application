@@ -20,6 +20,9 @@ import io
 import pathlib
 import shutil
 
+import uuid
+import time
+
 app = Flask(__name__)
 app.secret_key = "secret key"
 #app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
@@ -30,11 +33,21 @@ app.config['UPLOAD_PATH_BW'] = 'input/built_works/'
 app.config['UPLOAD_PATH_AO'] = 'input/archival_object/'
 app.config['UPLOAD_PATH_GROUP'] = 'input/group/'
 #app.config['DOWNLOAD_PATH'] = 'output/person/'
+app.config['UPLOAD_PATH_ZIP'] = 'zip'
 
 ALLOWED_EXTENSIONS = set(['xml', 'rdf'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def unzip_file(src_path, dst_dir):
+    r = zipfile.is_zipfile(src_path)
+    if r:
+        fz = zipfile.ZipFile(src_path, "r")
+        for file in fz.namelist():
+            fz.extract(file, dst_dir)
+    else:
+        return "Please upload zip file"
 
 # Replace the existing home function with the one belowaboabo
 @app.route("/")
@@ -58,6 +71,7 @@ def person():
 def person_upload_file():
     if request.method == 'POST':
 
+        start_time = time.time()
         if 'files[]' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -65,10 +79,19 @@ def person_upload_file():
         files = request.files.getlist('files[]')
 
         for file in files:
+            ret_list = file.filename.rsplit(".", maxsplit=1)
+            if len(ret_list) == 2 and ret_list[1] == "zip":
+                file_path = os.path.join(app.config['UPLOAD_PATH_ZIP'], file.filename) #store zip file in fip folder
+                file.save(file_path)
+                unzip_file(file_path, os.path.join(app.config['UPLOAD_PATH_PERSON'], file.filename)) #unzip zip file and store files in usual folder
+                os.remove(file_path) # delete zip file from zip folder
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_PATH_PERSON'], filename))
-
+       
+        end_time = time.time()
+        total_time= end_time - start_time
+        print(f"duration of upload: {total_time}")
         flash('File(s) successfully uploaded')
         return redirect(url_for('person'))
     
@@ -112,6 +135,13 @@ def place_upload_file():
         files = request.files.getlist('files[]')
 
         for file in files:
+            ret_list = file.filename.rsplit(".", maxsplit=1)
+
+            if len(ret_list) == 2 and ret_list[1] == "zip":
+                file_path = os.path.join(app.config['UPLOAD_PATH_ZIP'], file.filename) #store zip file in fip folder
+                file.save(file_path)
+                unzip_file(file_path, os.path.join(app.config['UPLOAD_PATH_PLACE'], file.filename)) #unzip zip file and store files in usual folder
+                os.remove(file_path) # delete zip file from zip folder
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_PATH_PLACE'], filename))
@@ -159,6 +189,14 @@ def archival_object_upload_file():
         files = request.files.getlist('files[]')
 
         for file in files:
+            ret_list = file.filename.rsplit(".", maxsplit=1)
+
+            if len(ret_list) == 2 and ret_list[1] == "zip":
+                file_path = os.path.join(app.config['UPLOAD_PATH_ZIP'], file.filename) #store zip file in fip folder
+                file.save(file_path)
+                unzip_file(file_path, os.path.join(app.config['UPLOAD_PATH_AO'], file.filename)) #unzip zip file and store files in usual folder
+                os.remove(file_path) # delete zip file from zip folder
+                
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_PATH_AO'], filename))
@@ -206,6 +244,13 @@ def built_works_upload_file():
         files = request.files.getlist('files[]')
 
         for file in files:
+            
+            ret_list = file.filename.rsplit(".", maxsplit=1)
+            if len(ret_list) == 2 and ret_list[1] == "zip":
+                file_path = os.path.join(app.config['UPLOAD_PATH_ZIP'], file.filename) #store zip file in fip folder
+                file.save(file_path)
+                unzip_file(file_path, os.path.join(app.config['UPLOAD_PATH_BW'], file.filename)) #unzip zip file and store files in usual folder
+                os.remove(file_path) # delete zip file from zip folder
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_PATH_BW'], filename))
@@ -254,6 +299,12 @@ def group_upload_file():
         files = request.files.getlist('files[]')
 
         for file in files:
+            ret_list = file.filename.rsplit(".", maxsplit=1)
+            if len(ret_list) == 2 and ret_list[1] == "zip":
+                file_path = os.path.join(app.config['UPLOAD_PATH_ZIP'], file.filename) #store zip file in fip folder
+                file.save(file_path)
+                unzip_file(file_path, os.path.join(app.config['UPLOAD_PATH_GROUP'], file.filename)) #unzip zip file and store files in usual folder
+                os.remove(file_path) # delete zip file from zip folder
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_PATH_GROUP'], filename))
