@@ -33,7 +33,7 @@ app.config['UPLOAD_PATH_BW'] = 'input/built_works/'
 app.config['UPLOAD_PATH_AO'] = 'input/archival_object/'
 app.config['UPLOAD_PATH_GROUP'] = 'input/group/'
 #app.config['DOWNLOAD_PATH'] = 'output/person/'
-app.config['UPLOAD_PATH_ZIP'] = 'zip'
+app.config['UPLOAD_PATH_ZIP'] = 'input/zip/'
 
 ALLOWED_EXTENSIONS = set(['xml', 'rdf'])
 
