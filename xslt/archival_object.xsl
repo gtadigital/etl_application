@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- author: ETH Zurich, gta digital, Matteo Lorenzini -->
 <!-- license: please refer to the license.txt file in our git repository (https://github.com/gtadigital/XSLT) -->
-<xsl:stylesheet version="1.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:pr="https://schema.easydb.de/EASYDB/1.0/objects/" exclude-result-prefixes="pr">
-	<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:pr="https://schema.easydb.de/EASYDB/1.0/objects/"
+                version="1.0"
+                exclude-result-prefixes="pr">
+	<xsl:output method="xml"
+	            indent="yes"
+	            encoding="UTF-8"/>
 	<xsl:template match="/">
 		<root>
 			<xsl:apply-templates/>
 		</root>
 	</xsl:template>
-	<xsl:template match="@*|node()" mode="copy-no-namespaces">
+	<xsl:template match="@*|node()"
+	              mode="copy-no-namespaces">
 		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" mode="copy-no-namespaces"/>
+			<xsl:apply-templates select="@*|node()"
+			                     mode="copy-no-namespaces"/>
 		</xsl:copy>
 	</xsl:template>
 	<xsl:template match="pr:do"/>
@@ -42,21 +47,25 @@
 					<xsl:value-of select="pr:tags/pr:tag[2]/pr:name/pr:en-US"/>
 				</ao_nc_tag_en>
                 </xsl:element>
-            -->
-    
-
-			<xsl:element name="ao_tag_name">
-				<ao_tag_de>
-					<xsl:value-of select="pr:tags/pr:tag/pr:name/pr:de-DE"/>
-				</ao_tag_de>
-				<ao_nc_tag_en>
-					<xsl:value-of select="pr:tags/pr:tag/pr:name/pr:en-US"/>
-				</ao_nc_tag_en>
-                </xsl:element>
-
-
-
-                <!-- IDENTIFIERS -->
+            
+      <xsl:element name="ao_tag_name">
+        <xsl:for-each select="pr:tags/pr:tag">
+          <ao_tag_de>
+            <xsl:value-of select="pr:name/pr:de-DE"/>
+          </ao_tag_de>
+          <ao_nc_tag_en>
+            <xsl:value-of select="pr:name/pr:en-US"/>
+          </ao_nc_tag_en>
+        </xsl:for-each>
+      </xsl:element>
+	  -->
+			<!--Hierarchy-->
+			<xsl:element name="ao_type_isag">
+				<ao_type_isad_uri>
+					<xsl:value-of select="pr:ao_type_isag/pr:ao_type_isad/pr:ao_type_isad_uri"/>
+				</ao_type_isad_uri>
+			</xsl:element>
+			<!-- IDENTIFIERS -->
 			<ao_preferred_identifier>
 				<xsl:value-of select="pr:ao_nc_identifier"/>
 			</ao_preferred_identifier>
@@ -509,15 +518,15 @@
 					<xsl:value-of select="pr:ao_actorrelation_former_ownership_note/pr:en-US"/>
 				</ao_former_ownership_note_en>
 			</xsl:element>
-			<xsl:element name ="ao_entry_tax">
+			<xsl:element name="ao_entry_tax">
 				<xsl:for-each select="pr:_nested__ao__tax_transurbicide/pr:ao__tax_transurbicide">
-					<xsl:element name ="ao_entry_tax_transurbicide">
-					<tax_transurbicide_label>
-					<xsl:value-of select="pr:tax_transurbicide/pr:tax_transurbicide/pr:tax_transurbicide_name/pr:en-US"/>
-					</tax_transurbicide_label>
+					<xsl:element name="ao_entry_tax_transurbicide">
+						<tax_transurbicide_label>
+							<xsl:value-of select="pr:tax_transurbicide/pr:tax_transurbicide/pr:tax_transurbicide_name/pr:en-US"/>
+						</tax_transurbicide_label>
 						<tax_transurbicide_uri>
-					<xsl:value-of select="pr:tax_transurbicide/pr:tax_transurbicide/pr:tax_transurbicide_uri_gta_digital"/>
-					</tax_transurbicide_uri>
+							<xsl:value-of select="pr:tax_transurbicide/pr:tax_transurbicide/pr:tax_transurbicide_uri_gta_digital"/>
+						</tax_transurbicide_uri>
 					</xsl:element>
 				</xsl:for-each>
 			</xsl:element>
