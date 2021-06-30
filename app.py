@@ -1,18 +1,16 @@
 from flask import Flask
 from flask import render_template
-from datetime import datetime
-import re
 import os
 import person_parser
 import archival_object_parser
 import built_works_parser
 import group_parser
 import place_parser
-
+from flask_bootstrap import Bootstrap
 from flask import request
-from flask import redirect, url_for, abort, flash
+from flask import redirect, url_for,  flash
 from werkzeug.utils import secure_filename
-from flask import send_from_directory
+
 #imports for download function:
 import flask as fl
 import zipfile
@@ -20,10 +18,10 @@ import io
 import pathlib
 import shutil
 
-import uuid
 import time
 
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 app.secret_key = "secret key"
 #app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 #app.config['UPLOAD_EXTENSIONS'] = ['.xml', '.rdf']
