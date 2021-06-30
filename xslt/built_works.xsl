@@ -243,8 +243,11 @@
 						<xsl:element name="oeu__isler_subst_shell_nr">
 							<xsl:value-of select="pr:oeu__isler_subst_shell_nr"/>
 						</xsl:element>
-						<xsl:element name="typology_shell_name">
-							<xsl:value-of select="pr:oeu_isler_subst_shell_type/pr:typology_shell/pr:typology_shell_name/pr:de-DE"/>
+						<xsl:element name="oeu__isler_subst_shell_nr">
+							<xsl:value-of select="pr:oeu__isler_subst_shell_nr"/>
+						</xsl:element>
+						<xsl:element name="shell_uuid">
+							<xsl:value-of select="pr:oeu_isler_subst_shell_type/pr:typology_shell/pr:_uuid"/>
 						</xsl:element>
 						<xsl:element name="oeu_isler_subst_shell_measurement_value">
 							<xsl:value-of select="pr:oeu_isler_subst_shell_measurement_value"/>
