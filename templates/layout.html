@@ -1,28 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
-    </head>
+{% extends 'bootstrap/base.html' %}
 
-    <body>
-        <div class="navbar">
-            <a href="{{ url_for('home') }}" class="navbar-brand">Home</a>
-            <a href="{{ url_for('person') }}" class="navbar-item">Person</a>
-            <a href="{{ url_for('archival_object') }}" class="navbar-item">Collection</a>
-            <a href="{{ url_for('built_works') }}" class="navbar-item">Built Works</a>
-            <a href="{{ url_for('place') }}" class="navbar-item">Place</a>
-            <a href="{{ url_for('group') }}" class="navbar-item">Group</a>
-        </div>
+{% block title %}Parser Tool{% endblock %}
 
-        <div class="body-content">
-            {% block content %}
-            {% endblock %}
-            <hr/>
-            <footer>
-                <p>© EHT Zurich - GTA Institute - 2021 -</p>
-            </footer>
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('home') }}"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('home') }}">{{('Home') }}</a></li>
+                    <li><a href="{{ url_for('person') }}">{{('Person') }}</a></li>
+                    <li><a href="{{ url_for('archival_object') }}">{{('Collection') }}</a></li>
+                    <li><a href="{{ url_for('built_works') }}">{{('Built works') }}</a></li>
+                    <li><a href="{{ url_for('place') }}">{{('Place') }}</a></li>
+                    <li><a href="{{ url_for('group') }}">{{('Group') }}</a></li>
+                </ul>
+            </div>
         </div>
-    </body>
-</html>
+    </nav>
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('static', filename='.css')}}">
+{% endblock %}
