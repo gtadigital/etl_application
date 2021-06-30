@@ -243,7 +243,7 @@
 						<xsl:element name="oeu__isler_subst_shell_nr">
 							<xsl:value-of select="pr:oeu__isler_subst_shell_nr"/>
 						</xsl:element>
-						<xsl:element name="shell_uuid">
+						<xsl:element name="typology_shell_uuid">
 							<xsl:value-of select="pr:oeu_isler_subst_shell_type/pr:typology_shell/pr:_uuid"/>
 						</xsl:element>
 						<xsl:element name="typology_shell_name">
@@ -255,9 +255,13 @@
 						<xsl:element name="_nested__oeu__oeu_isler_subst_shell__oeu_isler_subst_shell_materials">
 							<xsl:value-of select="pr:_nested__oeu__oeu_isler_subst_shell__oeu_isler_subst_shell_materials/pr:oeu__oeu_isler_subst_shell__oeu_isler_subst_shell_materials/pr:oeu_isler_subst_shell_material/pr:generic_materials/pr:generic_material_name/pr:de-DE"/>
 						</xsl:element>
+						<xsl:element name="_nested__oeu__oeu_isler_subst_shell__oeu_isler_subst_shell_materials_uuid">
+							<xsl:value-of select="pr:_nested__oeu__oeu_isler_subst_shell__oeu_isler_subst_shell_materials/pr:oeu__oeu_isler_subst_shell__oeu_isler_subst_shell_materials/pr:oeu_isler_subst_shell_material/pr:generic_materials/pr:_uuid"/>
+						</xsl:element>
 					</xsl:element>
 				</xsl:for-each>
 			</xsl:element>
 		</entry>
 	</xsl:template>
 </xsl:stylesheet>
+
