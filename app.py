@@ -225,6 +225,7 @@ def built_works_page():
     if request.method == 'POST':
         #return built_works_parser.parser_built_works()
         built_works_parser.parser_built_works()
+        flash('File(s) successfully transformed')
         return redirect(url_for('built_works'))
     
 @app.route("/built_works/")
@@ -253,8 +254,8 @@ def built_works_upload_file():
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_PATH_BW'], filename))
 
-        flash('File(s) successfully uploaded')
-        return redirect(url_for('built_works'))
+    flash('File(s) successfully uploaded')
+    return redirect(url_for('built_works'))
     
 @app.route('/download_files_built_works/', methods=['POST'])
 def built_works_download_files():
@@ -271,6 +272,7 @@ def built_works_download_files():
     shutil.rmtree('./input/built_works')
     os.makedirs('./output/built_works')
     os.makedirs('./input/built_works')
+    flash('File(s) successfully dumped')
     return fl.send_file(data_file, attachment_filename='built_works.zip', as_attachment=True)
 
 
