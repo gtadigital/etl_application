@@ -2,22 +2,22 @@
 <!-- author: ETH Zurich, gta digital, Matteo Lorenzini -->
 <!-- license: please refer to the license.txt file in our git repository (https://github.com/gtadigital/XSLT) -->
 <xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:pr="https://schema.easydb.de/EASYDB/1.0/objects/"
-                exclude-result-prefixes="pr">
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+				xmlns:pr="https://schema.easydb.de/EASYDB/1.0/objects/"
+				exclude-result-prefixes="pr">
 	<xsl:output method="xml"
-	            indent="yes"
-	            encoding="UTF-8"/>
+				indent="yes"
+				encoding="UTF-8"/>
 	<xsl:template match="/">
 		<root>
 			<xsl:apply-templates/>
 		</root>
 	</xsl:template>
 	<xsl:template match="@*|node()"
-	              mode="copy-no-namespaces">
+				  mode="copy-no-namespaces">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()"
-			                     mode="copy-no-namespaces"/>
+								 mode="copy-no-namespaces"/>
 		</xsl:copy>
 	</xsl:template>
 	<xsl:template match="pr:objects/pr:oeu">
