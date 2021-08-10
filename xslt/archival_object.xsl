@@ -357,13 +357,13 @@
 			<!-- Coverage Oeuvres -->
 			<xsl:element name="ao_cover_oeuvres">
 				<xsl:for-each select="pr:_nested__ao__ao_cover_oeuvres/pr:ao__ao_cover_oeuvres">
-					<xsl:element name="ao_cover_actors_type">
+					<xsl:element name="ao_cover_oeuvre_type">
 						<ao_cover_oeuvres_uuid>
 							<xsl:value-of select="pr:ao_cover_oeuvres/pr:oeu/pr:_uuid"/>
 						</ao_cover_oeuvres_uuid>
 					</xsl:element>
 					<xsl:element name="ao_cover_oeuvres_role">
-						<xsl:for-each select="pr:ao_cover_oeuvre_role/pr:generic_reference">
+						<xsl:for-each select="pr:ao_cover_oeuvre_role/pr:generic_reference_types">
 							<ao_cover_oeuvres_type_de>
 								<xsl:value-of select="pr:generic_reference_name/pr:de-DE"/>
 							</ao_cover_oeuvres_type_de>
