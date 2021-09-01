@@ -338,8 +338,13 @@
 						<ao_cover_actor_uuid>
 							<xsl:value-of select="pr:ao_cover_actors/pr:act/pr:_uuid"/>
 						</ao_cover_actor_uuid>
+						<!--
 						<ao_cover_actor_type>
 							<xsl:value-of select="pr:ao_cover_actors/pr:act/pr:act_type_crm/pr:act_type_crm/pr:act_type_crm_name"/>
+						</ao_cover_actor_type>
+						-->
+						<ao_cover_actor_type>
+							<xsl:value-of select="pr:ao_cover_actors/pr:act/pr:act_type_crm/pr:act_type_crm/pr:_standard/pr:de-DE"/>
 						</ao_cover_actor_type>
 					</xsl:element>
 					<xsl:element name="ao_cover_actor_role">
